@@ -1,0 +1,6 @@
+<% flash.each do | type, message | %>
+  <div class="alert alert-warning alert-dismissible fade show alert-<%= notice %>">
+    <a href="#" data-dismiss='alert' class='close'>x</a>
+    <%= message %>
+  </div>
+<% end %>
