@@ -14,7 +14,7 @@
     <div class="col">
       <div class="collapse multi-collapse" id="multiCollapseExample1">
         <div class="card card-body">
-          <%= render @tasks %>
+          <%= render 'tasklist', tasks: @todo%>
           <%= link_to 'add', new_task_path %>
         </div>
       </div>
@@ -22,34 +22,18 @@
     <div class="col">
       <div class="collapse multi-collapse" id="multiCollapseExample2">
         <div class="card card-body">
-         content 2
+         <%= render 'tasklist', tasks: @ongoing%>
+          <%= link_to 'add', new_task_path %>
         </div>
       </div>
     </div>
     <div class="col">
       <div class="collapse multi-collapse" id="multiCollapseExample3">
         <div class="card card-body">
-          content 3
+          <%= render 'tasklist', tasks: @archive%>
+          <%= link_to 'add', new_task_path %>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<%
-=begin%>
- 
-<h1>Tasks</h1>
-
-<div id="tasks">
-  <% @tasks.each do |task| %>
-    <%= render task %>
-    <p>
-      <%= link_to "Show this task", task %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New task", new_task_path %> 
-<%
-=end%>

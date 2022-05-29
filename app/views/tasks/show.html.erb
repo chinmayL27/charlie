@@ -1,10 +1,18 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @task %>
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title"><%= @task.title %></h5>
+        <h6 class="card-subtitle mb-2 text-muted"><%= @task.created_at %></h6>
+        <p class="card-text"><%= @task.description %></p>
+        <div class="d-flex justify-content-between align-items-center">
+        </div>
+    </div>
+</div>
 
 <div>
-  <%= link_to "Edit this task", edit_task_path(@task) %> |
-  <%= link_to "Back to tasks", tasks_path %>
-
-  <%= button_to "Destroy this task", @task, method: :delete %>
+  <%= link_to 'Edit', edit_task_path(@task), class:'card-link'%>
+  <br/>
+  <br/>
+  <%= button_to "Destroy this task", @task, method: :delete, class:'btn btn-primary' %>
 </div>
