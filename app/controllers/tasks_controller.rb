@@ -1,10 +1,13 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
 
   # GET /tasks or /tasks.json
   def index
     @tasks = Task.all
-    @todo = @tasks.where(status:'to-do')
+    @todo = current_user.tasks.where(status:'to-do')
+    @ongoing = current_user.tasks.where(status:'on-going')
+    @archive = current_user.tasks.where(status:'archived')
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -22,16 +25,13 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
-
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to task_url(@task), notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: @task }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    @task = current_user.tasks.new(task_params)
+    if @task.save()
+      flash[:notice] = 'The task was successfully created!'
+      redirect_to task_path(@task)
+    else
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @task.errors, status: :unprocessable_entity }
     end
   end
 
@@ -61,7 +61,7 @@ class TasksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @task = Task.find(params[:id])
+      @task = current_user.tasks.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
